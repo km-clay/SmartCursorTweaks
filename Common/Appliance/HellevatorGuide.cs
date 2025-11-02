@@ -5,7 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using System.Linq;
 
-namespace SmartCursorRewritten.Common.Appliance {
+namespace SmartCursorTweaks.Common.Appliance {
 	public class HellevatorGuide : SmartCursorAppliance {
 		protected override bool IsValidTile(SmartCursorContext ctx, Point pnt) {
 			// Only target tiles below the player

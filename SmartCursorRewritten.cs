@@ -7,8 +7,8 @@ using Terraria.ModLoader;
 using LibSmartCursor.API;
 using Terraria.ID;
 
-namespace SmartCursorRewritten
+namespace SmartCursorTweaks
 {
 	// Please read https://github.com/tModLoader/tModLoader/wiki/Basic-tModLoader-Modding-Guide#mod-skeleton-contents for more information about the various files in a mod.
-	public class SmartCursorRewritten : Mod {}
+	public class SmartCursorTweaks : Mod {}
 }

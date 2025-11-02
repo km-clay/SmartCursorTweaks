@@ -1,4 +1,4 @@
-displayName = Smart Cursor Rewritten
+displayName = Smart Cursor Tweaks
 author = pagedMov
 version = 0.1
 modReferences = LibSmartCursor

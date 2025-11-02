@@ -5,7 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using System.Linq;
 
-namespace SmartCursorRewritten.Common.Appliance {
+namespace SmartCursorTweaks.Common.Appliance {
 	public class SmartRope : SmartCursorAppliance {
 		private static int[] ROPE_ITEMS = [
 			ItemID.Rope,

@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 using Terraria.ID;
 
 
-namespace SmartCursorRewritten.Common.Appliance {
+namespace SmartCursorTweaks.Common.Appliance {
 	public class VeinMinerPlayer : ModPlayer {
 		public int[] Ores = [
 			TileID.FossilOre,

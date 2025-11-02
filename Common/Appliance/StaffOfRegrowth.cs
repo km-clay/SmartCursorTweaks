@@ -6,7 +6,7 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
 
-namespace SmartCursorRewritten.Common.Appliance {
+namespace SmartCursorTweaks.Common.Appliance {
 	public class SmartStaffOfRegrowth : SmartCursorAppliance {
 		protected override bool IsValidTile(SmartCursorContext ctx, Point point) {
 			Tile t = Main.tile[point.X, point.Y];
