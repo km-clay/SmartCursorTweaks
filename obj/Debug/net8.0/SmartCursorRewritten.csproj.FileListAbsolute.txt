@@ -1,0 +1,5 @@
+/home/pagedmov/.local/share/Terraria/tModLoader/ModSources/SmartCursorRewritten/obj/Debug/net8.0/SmartCursorRewritten.csproj.AssemblyReference.cache
+/home/pagedmov/.local/share/Terraria/tModLoader/ModSources/SmartCursorRewritten/obj/Debug/net8.0/SmartCursorRewritten.GeneratedMSBuildEditorConfig.editorconfig
+/home/pagedmov/.local/share/Terraria/tModLoader/ModSources/SmartCursorRewritten/obj/Debug/net8.0/SmartCursorRewritten.AssemblyInfoInputs.cache
+/home/pagedmov/.local/share/Terraria/tModLoader/ModSources/SmartCursorRewritten/obj/Debug/net8.0/SmartCursorRewritten.AssemblyInfo.cs
+/home/pagedmov/.local/share/Terraria/tModLoader/ModSources/SmartCursorRewritten/obj/Debug/net8.0/SmartCursorRewritten.csproj.CoreCompileInputs.cache

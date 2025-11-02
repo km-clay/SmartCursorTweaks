@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "znKBgQ4I22s=",
+  "success": true,
+  "projectFilePath": "/home/pagedmov/.local/share/Terraria/tModLoader/ModSources/SmartCursorRewritten/SmartCursorRewritten.csproj",
+  "expectedPackageFiles": [
+    "/home/pagedmov/.nuget/packages/microsoft.netcore.app.ref/8.0.21/microsoft.netcore.app.ref.8.0.21.nupkg.sha512",
+    "/home/pagedmov/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.21/microsoft.aspnetcore.app.ref.8.0.21.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,4 @@
+displayName = Smart Cursor Rewritten
+author = pagedMov
+version = 0.1
+modReferences = LibSmartCursor
