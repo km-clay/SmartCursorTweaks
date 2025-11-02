@@ -13,6 +13,8 @@ namespace SmartCursorTweaks.Common.Appliance {
 			if (!t.HasTile) return false;
 
 			int style = t.TileFrameX / 18;
+
+			// If this tile is a blooming herb, return true
 			return WorldGen.IsHarvestableHerbWithSeed(t.TileType, style);
 		}
 	}

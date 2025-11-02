@@ -21,6 +21,8 @@ namespace SmartCursorTweaks.Common.Appliance {
 			if (ctx.Player.ZoneOverworldHeight) {
 				return false;
 			}
+
+			// Check for a lot of open vertical space above the tile
 			for (int i = 1; i < 300; i++) {
 				if (!WorldGen.InWorld(pnt.X, pnt.Y - i)) {
 					break;
@@ -31,6 +33,7 @@ namespace SmartCursorTweaks.Common.Appliance {
 				}
 			}
 
+			// There is a lot of open vertical space above this tile. Certainly a hellevator.
 			Tile scrutinee = Main.tile[pnt.X, pnt.Y];
 
 			return scrutinee.HasTile;

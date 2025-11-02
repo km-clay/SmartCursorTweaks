@@ -9,6 +9,7 @@ using Terraria.ID;
 
 
 namespace SmartCursorTweaks.Common.Appliance {
+	// This class holds state per-player
 	public class VeinMinerPlayer : ModPlayer {
 		public int[] Ores = [
 			TileID.FossilOre,
@@ -53,6 +54,7 @@ namespace SmartCursorTweaks.Common.Appliance {
 		}
 
 		public void TraverseVein(Point point) {
+			// BFS
 			Queue<Point> work = new();
 			work.Enqueue(point);
 
@@ -84,10 +86,12 @@ namespace SmartCursorTweaks.Common.Appliance {
 
 	public class VeinMinerAppliance : SmartCursorAppliance {
 		protected override bool IsValidTile(SmartCursorContext ctx, Point tile) {
+			// Grab our ModPlayer instance that has our state
 			var veinMiner = ctx.Player.GetModPlayer<VeinMinerPlayer>();
 			int[] ores = veinMiner.Ores;
 			Tile t = Main.tile[tile.X, tile.Y];
 
+			// Use ModPlayer state to make informed decisions
 			if (!t.HasTile || !veinMiner.Ores.Contains(t.TileType)) {
 				return false;
 			}
