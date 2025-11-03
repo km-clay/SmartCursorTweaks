@@ -98,6 +98,7 @@ namespace SmartCursorTweaks.Common.Appliance {
 
 			if (veinMiner.CurrentVein.Contains(tile)) {
 				return true;
+			// If it is an ore, and is not a part of the current vein, reset the vein
 			} else if (veinMiner.Ores.Contains(t.TileType) && ((veinMiner.CurrentVeinOre.HasValue && veinMiner.CurrentVeinOre.Value != t.TileType) || !veinMiner.CurrentVein.Contains(tile))) {
 				veinMiner.ResetVein();
 			}
@@ -106,6 +107,7 @@ namespace SmartCursorTweaks.Common.Appliance {
 				return false;
 			}
 
+			// Traverse the vein and add all ore tiles to the current vein
 			veinMiner.TraverseVein(tile);
 			bool ret = veinMiner.CurrentVein.Contains(tile);
 			if (ret) {
@@ -119,7 +121,7 @@ namespace SmartCursorTweaks.Common.Appliance {
 	public class VeinMinerSystem : ModSystem {
 		public override void PostSetupContent() {
 			Registry.RegisterAppliance(
-				item => item.pick > 0,
+				item => item.pick > 0, // "If we have a pickaxe..."
 				new VeinMinerAppliance(),
 				SmartCursorRegistry.PRIORITY_NORMAL
 			);
