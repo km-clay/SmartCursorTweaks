@@ -1,1 +1,10 @@
-This description will show up on the steam page, check out https://steamcommunity.com/comment/Guide/formattinghelp.
+[p]A collection of tweaks for Smart Cursor that will make it more helpful in a variety of situations.[/p]
+
+[p]Some highlights:
+- While you are digging a hellevator, it will heavily prioritize tiles that are aligned with it, so you don't have to eyeball the alignment after a long fall.
+- When mining ores, smart cursor will proritize targeting tiles that are part of that ore vein.
+- Pickaxes now very heavily prioritize targeting Crystal Shards, since breaking them is essentially free
+- The Staff of Regrowth will target blooming herbs on planter boxes/clay pots, and both mature and blooming wild herbs.
+- While holding rope, smart cursor will target the nearest placed rope for easy extension[/p]
+
+[p]Built using LibSmartCursor, a smart cursor extension library I wrote for tModLoader[/p]
