@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using System.Linq;
+using AlgoLib.Geometry;
 
 namespace SmartCursorTweaks.Common.Appliance {
 	public class SmartRope : SmartCursorAppliance {
@@ -23,20 +24,18 @@ namespace SmartCursorTweaks.Common.Appliance {
 
 		protected override bool IsValidTile(SmartCursorContext ctx, Point pnt) {
 			// Get the tile from Main
-			Tile tile = Main.tile[pnt.X, pnt.Y];
+			if (!TileUtils.GetTileSafe(pnt, out Tile tile)) return false;
 
 			// If the tile is a rope, target it
 			return tile.HasTile && ROPE_TILES.Contains(tile.TileType);
 		}
 
-		public class SmartRopeSystem : ModSystem {
-			public override void PostSetupContent() {
-				LibSmartCursor.LibSmartCursor.Registry.RegisterAppliance(
-					item => ROPE_ITEMS.Contains(item.type),
-					new SmartRope(),
-					SmartCursorRegistry.PRIORITY_LOW
-				);
-			}
+		public static ApplianceHandle Register() {
+			return LibSmartCursor.LibSmartCursor.Registry.RegisterAppliance(
+				item => ROPE_ITEMS.Contains(item.type),
+				new SmartRope(),
+				SmartCursorRegistry.PRIORITY_LOW
+			);
 		}
 	}
 }

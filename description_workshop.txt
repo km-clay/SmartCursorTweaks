@@ -7,4 +7,6 @@
 - The Staff of Regrowth will target blooming herbs on planter boxes/clay pots, and both mature and blooming wild herbs.
 - While holding rope, smart cursor will target the nearest placed rope for easy extension[/p]
 
-[p]Built using LibSmartCursor, a smart cursor extension library I wrote for tModLoader[/p]
+All new smart cursor behaviors added by this mod can be enabled/disabled in the mod config menu.
+
+[p]Built using [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3598706688]LibSmartCursor[/url], a smart cursor extension library I wrote for tModLoader[/p]

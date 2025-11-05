@@ -6,11 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
+using AlgoLib.Algo.Line;
+using AlgoLib.Geometry;
+using AlgoLib.Algo.Graph;
+using System;
 
 
 namespace SmartCursorTweaks.Common.Appliance {
-	// This class holds state per-player
-	public class VeinMinerPlayer : ModPlayer {
+public class VeinMinerAppliance : SmartCursorAppliance {
 		public int[] Ores = [
 			TileID.FossilOre,
 			TileID.DesertFossil,
@@ -33,20 +36,16 @@ namespace SmartCursorTweaks.Common.Appliance {
 			TileID.Adamantite,
 			TileID.Titanium,
 			TileID.Chlorophyte,
+			TileID.Diamond,
+			TileID.Ruby,
+			TileID.Emerald,
+			TileID.Sapphire,
+			TileID.Amethyst,
+			TileID.Topaz,
 		];
 		public HashSet<Point> CurrentVein { get; set; } = new();
+		public Point? VeinCentroid = null;
 		public int? CurrentVeinOre = null;
-
-		private Point[] GetNeighbors(Point point) => [
-			new Point(point.X + 1, point.Y),
-			new Point(point.X - 1, point.Y),
-			new Point(point.X, point.Y + 1),
-			new Point(point.X, point.Y - 1),
-			new Point(point.X + 1, point.Y + 1),
-			new Point(point.X - 1, point.Y - 1),
-			new Point(point.X + 1, point.Y - 1),
-			new Point(point.X - 1, point.Y + 1),
-		];
 
 		public void ResetVein() {
 			CurrentVein.Clear();
@@ -54,74 +53,79 @@ namespace SmartCursorTweaks.Common.Appliance {
 		}
 
 		public void TraverseVein(Point point) {
-			// BFS
-			Queue<Point> work = new();
-			work.Enqueue(point);
-
-			while (work.Count > 0) {
-				Point tile = work.Dequeue();
-
+			// Set up our validation lambda
+			Func<Point, bool> validator = pnt => {
 				if (CurrentVeinOre.HasValue) {
-					Tile tCheck = Main.tile[tile.X, tile.Y];
+					Tile tCheck = Main.tile[pnt.X, pnt.Y];
 					if (tCheck.HasTile && tCheck.TileType != CurrentVeinOre.Value) {
-						continue;
+						return false;
 					}
 				}
-				if (CurrentVein.Contains(tile)) continue;
 
-				Tile t = Main.tile[tile.X, tile.Y];
-				if (!t.HasTile || !Ores.Contains(t.TileType)) continue;
+				Tile t = Main.tile[pnt.X, pnt.Y];
+				if (!t.HasTile || !Ores.Contains(t.TileType)) return false;
+				return true;
+			};
 
-				CurrentVein.Add(tile);
+			// Create a BFSIterator that uses our validator
+			var bfsIter = new BFSIterator(point, validator);
+
+			// Operate on points from bfsIter
+			foreach (Point pnt in bfsIter) {
+				CurrentVein.Add(pnt);
 				if (CurrentVeinOre == null) {
+					Tile t = Main.tile[pnt.X, pnt.Y];
 					CurrentVeinOre = t.TileType;
 				}
-
-				foreach (Point n in GetNeighbors(tile)) {
-					work.Enqueue(n);
-				}
 			}
 		}
-	}
-
-	public class VeinMinerAppliance : SmartCursorAppliance {
 		protected override bool IsValidTile(SmartCursorContext ctx, Point tile) {
-			// Grab our ModPlayer instance that has our state
-			var veinMiner = ctx.Player.GetModPlayer<VeinMinerPlayer>();
-			int[] ores = veinMiner.Ores;
 			Tile t = Main.tile[tile.X, tile.Y];
 
-			// Use ModPlayer state to make informed decisions
-			if (!t.HasTile || !veinMiner.Ores.Contains(t.TileType)) {
+			// Early exit: not an ore tile
+			bool notAnOre = (!t.HasTile || !this.Ores.Contains(t.TileType));
+			if (notAnOre) {
 				return false;
 			}
 
-			if (veinMiner.CurrentVein.Contains(tile)) {
-				return true;
-			// If it is an ore, and is not a part of the current vein, reset the vein
-			} else if (veinMiner.Ores.Contains(t.TileType) && ((veinMiner.CurrentVeinOre.HasValue && veinMiner.CurrentVeinOre.Value != t.TileType) || !veinMiner.CurrentVein.Contains(tile))) {
-				veinMiner.ResetVein();
+			bool isDifferentOre = (this.CurrentVeinOre.HasValue && this.CurrentVeinOre.Value != t.TileType);
+			bool alreadyTrackingVein = (this.CurrentVein.Count > 0);
+			if (isDifferentOre) {
+				this.ResetVein();
 			}
 
-			if (veinMiner.CurrentVein.Count > 0) {
-				return false;
+			if (!alreadyTrackingVein) {
+				this.TraverseVein(tile);
 			}
 
-			// Traverse the vein and add all ore tiles to the current vein
-			veinMiner.TraverseVein(tile);
-			bool ret = veinMiner.CurrentVein.Contains(tile);
-			if (ret) {
+			bool tileInVein = this.CurrentVein.Contains(tile);
+			bool hasLineOfSight = PlayerHasPath(ctx.Player.Center, t.TileType);
+
+			if (tileInVein && hasLineOfSight) {
 				// Force tile to be mineable
 				ctx.RestrictedTiles.Remove(tile);
+				return true;
 			}
-			return ret;
-		}
-	}
 
-	public class VeinMinerSystem : ModSystem {
-		public override void PostSetupContent() {
-			Registry.RegisterAppliance(
-				item => item.pick > 0, // "If we have a pickaxe..."
+			return false;
+		}
+
+		private bool PlayerHasPath(Vector2 playerCenter, int targetTileType) {
+			Point veinCentroid = GridUtils.GetCentroid(CurrentVein).ToPoint();
+			Point playerCenterPoint = GridUtils.WorldToTile(playerCenter);
+
+			var bresenham = new BresenhamIterator(playerCenterPoint, veinCentroid);
+			foreach (Point pnt in bresenham) {
+				Tile tile = Main.tile[pnt.X, pnt.Y];
+				if (tile.HasTile && Main.tileSolid[tile.TileType] && tile.TileType != targetTileType) {
+					return false;
+				}
+			}
+			return true;
+		}
+		public static ApplianceHandle Register() {
+			return Registry.RegisterAppliance(
+				item => item.pick > 0,
 				new VeinMinerAppliance(),
 				SmartCursorRegistry.PRIORITY_NORMAL
 			);

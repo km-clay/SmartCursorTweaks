@@ -1,0 +1,41 @@
+Mods: {
+	SmartCursorTweaks: {
+		Configs: {
+			SmartCursorTweaksConfig: {
+				EnableStaffOfRegrowth: {
+					Tooltip: Allows the Staff of Regrowth and Axe of Regrowth to target blooming herbs with Smart Cursor.
+					Label: Enable Staff Of Regrowth
+				}
+
+				EnableRopePlacement: {
+					Tooltip: Enables Smart Cursor behavior for Rope.
+					Label: Enable Rope Placement
+				}
+
+				EnableTargetCrystals: {
+					Tooltip: Causes Smart Cursor to prioritize exposed gems and crystal shards when you have a pickaxe equipped.
+					Label: Enable Crystal/Gem Priority
+				}
+
+				EnableVeinMining: {
+					Tooltip: Allows Smart Cursor to vein mine ores and gems when using a pickaxe.
+					Label: Enable Vein Mining
+				}
+
+				EnableHellevatorGuide: {
+					Tooltip: Smart cursor helps with hellevator alignment when using a pickaxe.
+					Label: Enable Hellevator Guide
+				}
+
+				DisplayName: Smart Cursor Tweaks Config
+			}
+		}
+
+		Config: {
+			Headers: {
+				Misc: Misc Tweaks
+				Pickaxe: Pickaxe Tweaks
+			}
+		}
+	}
+}

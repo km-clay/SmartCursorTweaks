@@ -13,6 +13,9 @@
 		<Reference Include="LibSmartCursor">
 			<HintPath>/home/pagedmov/.local/share/Terraria/tModLoader/ModReader/LibSmartCursor/LibSmartCursor.dll</HintPath>
 		</Reference>
+		<Reference Include="AlgoLib">
+			<HintPath>/home/pagedmov/.local/share/Terraria/tModLoader/ModReader/AlgoLib/AlgoLib.dll</HintPath>
+		</Reference>
 	</ItemGroup>
 
 </Project>
